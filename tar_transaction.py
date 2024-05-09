@@ -12,5 +12,5 @@ class Tar:
         self.service_code = new_code
 
     def get_charges(self, c, n_c):
-        self.charge = c
-        self.new_charge = n_c
+        self.charge = float(c)
+        self.new_charge = float(n_c)
