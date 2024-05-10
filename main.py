@@ -18,41 +18,60 @@ e_new_charge_list = []
 # Read in the tar and ecb files
 tar_file = pd.read_excel('ServiceCodes_TAR.xlsx', skiprows=1, index_col=None)
 ecb_file = pd.read_excel('ServiceCodes_ECB.xlsx', skiprows=1, index_col=None)
+
+# Merged files for easier comparison
 all_entries = ecb_file.merge(tar_file, on=['SPA', 'Service Code'], how='outer')
 
+# Rows are iterated over as tuples.
 for row in all_entries.itertuples():
     if pd.isnull(row[4]) or pd.isnull(row[10]):
+        # Null/NaN cells indicate that an entry doesn't exist in both files.
         spa_list.append(row[1])
         service_code_list.append(row[2])
+
         error_list.append("Entry not in both files")
+
         t_charge_list.append("N/A")
         e_charge_list.append("N/A")
+
         t_new_charge_list.append("N/A")
         e_new_charge_list.append("N/A")
     else:
+        # Remove the $
         ecb_charge = float(row[4][1:])
+
+        # Check if the files have differing charges and/or new charges.
         if ecb_charge != float(row[10]) and float(row[6]) != float(row[12]):
             spa_list.append(row[1])
             service_code_list.append(row[2])
+
             error_list.append("Differing charges and new charges")
+
             e_charge_list.append(f"{ecb_charge}")
             t_charge_list.append(f"{float(row[10])}")
+
             e_new_charge_list.append(f"{float(row[6])}")
             t_new_charge_list.append(f"{float(row[12])}")
         elif ecb_charge != float(row[10]):
             spa_list.append(row[1])
             service_code_list.append(row[2])
+
             error_list.append("Differing charges")
+
             t_charge_list.append(f"{float(row[10])}")
             e_charge_list.append(f"{ecb_charge}")
+
             t_new_charge_list.append("N/A")
             e_new_charge_list.append("N/A")
         elif float(row[6]) != float(row[12]):
             spa_list.append(row[1])
             service_code_list.append(row[2])
+
             error_list.append("Differing new charges")
+
             t_charge_list.append("N/A")
             e_charge_list.append("N/A")
+
             t_new_charge_list.append(f"{float(row[12])}")
             e_new_charge_list.append(f"{float(row[6])}")
 
