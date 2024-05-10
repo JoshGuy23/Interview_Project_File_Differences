@@ -1,7 +1,6 @@
 import pandas as pd
 import openpyxl
-from tar_transaction import Tar
-from ecb_transaction import Ecb
+from row_data import Row
 
 # Notes:
 # tar file: SPA is row.iloc[0], service code is 1, charge is 2, new charge is 4
@@ -13,8 +12,8 @@ tar_file = pd.read_excel('ServiceCodes_TAR.xlsx', skiprows=2, nrows=10, index_co
 ecb_file = pd.read_excel('ServiceCodes_ECB.xlsx', skiprows=2, nrows=10, index_col=None)
 
 # Set up the classes for comparison.
-tar_row = Tar()
-ecb_row = Ecb()
+tar_row = Row()
+ecb_row = Row()
 for index, row in tar_file.iterrows():
     match = False
 
@@ -27,7 +26,7 @@ for index, row in tar_file.iterrows():
         # Add each ecb row into the relevant class
         ecb_row.set_spa(e_row.iloc[0])
         ecb_row.set_service_code(e_row.iloc[1])
-        ecb_row.set_charges(e_row.iloc[3], e_row.iloc[5])
+        ecb_row.ecb_set_charges(e_row.iloc[3], e_row.iloc[5])
         if tar_row.spa == ecb_row.spa and tar_row.service_code == ecb_row.service_code:
             # If a row with the matching spa and code is found, compare charges
             match = True

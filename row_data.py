@@ -1,5 +1,5 @@
 # This class represents a row in the tar file.
-class Tar:
+class Row:
     def __init__(self):
         # Initialize the class
         self.spa = ""
@@ -18,4 +18,10 @@ class Tar:
     def set_charges(self, c, n_c):
         # Ensures that both the charge and new charge are floats
         self.charge = float(c)
+        self.new_charge = float(n_c)
+
+    def ecb_set_charges(self, c, n_c):
+        # Ensures that both the charge and new charge are floats
+        # The dollar signs from the charge cells are removed
+        self.charge = float(c[1:])
         self.new_charge = float(n_c)
