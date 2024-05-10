@@ -28,13 +28,18 @@ for index, row in tar_file.iterrows():
         ecb_row.set_service_code(e_row.iloc[1])
         ecb_row.ecb_set_charges(e_row.iloc[3], e_row.iloc[5])
         if tar_row.spa == ecb_row.spa and tar_row.service_code == ecb_row.service_code:
+            diff_charges = False
+            diff_new_charges = False
             # If a row with the matching spa and code is found, compare charges
             match = True
             if tar_row.charge != ecb_row.charge:
+                diff_charges = True
                 print("Different charges")
-            elif tar_row.new_charge != ecb_row.new_charge:
+
+            if tar_row.new_charge != ecb_row.new_charge:
+                diff_new_charges = True
                 print("Different new charges")
-            # Exit the innter loop
+            # Exit the inner loop
             break
 
     # If no match was found, report an error
