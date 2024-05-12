@@ -3,8 +3,6 @@ from pandas import ExcelWriter, ExcelFile
 import openpyxl
 
 # Notes:
-# tar file: SPA is row.iloc[0], service code is 1, charge is 2, new charge is 4
-# ecb file: SPA is 0, service code is 1, charge is 3, new charge is 5
 # final Excel file columns SPA, Service Code, Reason For Error, TAR Charge, ECB Charge, TAR New Charge, ECB New Charge
 spa_list = []
 service_code_list = []
@@ -21,6 +19,18 @@ ecb_file = pd.read_excel('ServiceCodes_ECB.xlsx', skiprows=1, index_col=None)
 
 # Merged files for easier comparison
 all_entries = ecb_file.merge(tar_file, on=['SPA', 'Service Code'], how='outer')
+
+# all_df = pd.DataFrame(all_entries)
+# all_writer = ExcelWriter('Complete_Entries.xlsx')
+# all_df.to_excel(all_writer, sheet_name='Sheet1', index=False)
+# all_writer.close()
+
+# test_file = tar_file.merge(ecb_file, on=['SPA', 'Service Code'], how='outer')
+#
+# test_df = pd.DataFrame(test_file)
+# test_writer = ExcelWriter('ecb_to_tar_entries.xlsx')
+# test_df.to_excel(test_writer, sheet_name='Sheet1', index=False)
+# test_writer.close()
 
 # Rows are iterated over as tuples.
 for row in all_entries.itertuples():
