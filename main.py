@@ -101,8 +101,3 @@ df.to_excel(writer, sheet_name='Sheet1', index=False)
 writer.close()
 
 print("Done writing to file.")
-
-# Some testing code to determine how to access needed information
-# ecb_file = pd.read_excel('ServiceCodes_ECB.xlsx', skiprows=2, nrows=10, index_col=None)
-# for index, row in ecb_file.iterrows():
-#     print(f"{row.iloc[0]} {row.iloc[1]} {row.iloc[3]} {row.iloc[5]}")

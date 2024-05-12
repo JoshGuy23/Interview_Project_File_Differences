@@ -3,6 +3,11 @@ Previous version of (non-working) code used for comparing the files:
 # tar_row = Row()
 # ecb_row = Row()
 #
+# Some testing code to determine how to access needed information
+# ecb_file = pd.read_excel('ServiceCodes_ECB.xlsx', skiprows=2, nrows=10, index_col=None)
+# for index, row in ecb_file.iterrows():
+#     print(f"{row.iloc[0]} {row.iloc[1]} {row.iloc[3]} {row.iloc[5]}")
+#
 # for index, row in tar_file.iterrows():
 #     match = False
 #
