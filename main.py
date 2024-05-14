@@ -34,12 +34,23 @@ all_entries = ecb_file.merge(tar_file, on=['SPA', 'Service Code'], how='outer')
 
 # Rows are iterated over as tuples.
 for row in all_entries.itertuples():
-    if pd.isnull(row[4]) or pd.isnull(row[10]):
+    if pd.isnull(row[4]):
         # Null/NaN cells indicate that an entry doesn't exist in both files.
         spa_list.append(row[1])
         service_code_list.append(row[2])
 
-        error_list.append("Entry not in both files")
+        error_list.append("Entry only exists in the TAR file.")
+
+        t_charge_list.append("N/A")
+        e_charge_list.append("N/A")
+
+        t_new_charge_list.append("N/A")
+        e_new_charge_list.append("N/A")
+    elif pd.isnull(row[10]):
+        spa_list.append(row[1])
+        service_code_list.append(row[2])
+
+        error_list.append("Entry only exists in the ECB file.")
 
         t_charge_list.append("N/A")
         e_charge_list.append("N/A")
